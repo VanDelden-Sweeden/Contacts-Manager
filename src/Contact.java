@@ -1,10 +1,18 @@
 public class Contact {
     private String name;
-    private int phoneNumber;
+    private String phoneNumber;
 
 
-    public Contact(String name, int phoneNumber) {
+    public Contact(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getPhoneNumber(){
+        return this.phoneNumber;
     }
 }
