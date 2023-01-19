@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class ContactsManager {
     public static Scanner scanner = new Scanner (System.in);
     public static String userIn;
+    public static String userIn2;
     private static int count;
     private static List<String> newContactCollection;
     public static String delete;
@@ -41,6 +42,8 @@ public class ContactsManager {
     }
 
     public static void displayList(List<String> contactCollection) throws IOException {
+        System.out.println("Name    |   Phone Number");
+        System.out.println("------------------------");
         for (int i = 0; i < contactCollection.size(); i += 1) {
             System.out.println((i + 1) + ": " + contactCollection.get(i));
         }
@@ -51,6 +54,7 @@ public class ContactsManager {
         System.out.println("Enter name and phone number: ");
         userIn = scanner.nextLine();
         contactCollection.add(userIn);
+        System.out.println(userIn + " has been added to contacts.");
         displayMenu(contactCollection);
     }
 
@@ -59,9 +63,13 @@ public class ContactsManager {
         userIn = scanner.nextLine();
         for (String contact : contactCollection) {
             if (contact.contains(userIn)) {
+                System.out.println("Name    |   Phone Number");
                 System.out.println((count+1) + ": contact = " + contact);
                 count++;
             }
+        }
+        if (count == 0){
+            System.out.println("No contact contains " + userIn);
         }
         displayMenu(contactCollection);
     }
