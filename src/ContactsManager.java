@@ -16,6 +16,12 @@ public class ContactsManager {
 
     public static String delete;
 
+    public static String hypenNumber(String phoneNumber) {
+        String str = phoneNumber;
+        String str1 = str.substring(0, 3);
+        String str2 = str.substring(3, phoneNumber.length());
+        return str1 + "-" + str2;
+    }
 
     public static void displayMenu(ArrayList<Contact> contactCollection) throws IOException {
         System.out.println("Please select a menu option: ");
@@ -53,7 +59,7 @@ public class ContactsManager {
         System.out.println("Name    |   Phone Number");
         System.out.println("------------------------");
         for (int i = 0; i < contactCollection.size(); i += 1) {
-            System.out.println((i + 1) + ": " + contactCollection.get(i).getName() + "   |   " + contactCollection.get(i).getPhoneNumber());
+            System.out.println((i + 1) + ": " + contactCollection.get(i).getName() + "   |   " + hypenNumber(contactCollection.get(i).getPhoneNumber()));
         }
         System.out.println("------------------------");
         displayMenu(contactCollection);
@@ -66,7 +72,7 @@ public class ContactsManager {
         System.out.println("Enter Phone: ");
         userIn2 = scanner.nextLine();
         contactCollection.add(new Contact(userIn, userIn2));
-        System.out.println(userIn + " | " + userIn2 + " has been added to contacts.");
+        System.out.println(userIn + " | " + hypenNumber(userIn2) + " has been added to contacts.");
         System.out.println("---------------------");
         displayMenu(contactCollection);
     }
@@ -77,9 +83,10 @@ public class ContactsManager {
         userIn = scanner.nextLine();
         userIn = userIn.toLowerCase();
         System.out.println("Name    |   Phone Number");
+        System.out.println("--------------------");
         for (Contact contact : contactCollection) {
             if (contact.getName().toLowerCase().contains(userIn) || contact.getPhoneNumber().contains(userIn)) {
-                System.out.println((count + 1) + ": Contact = " + contact.getName() + " | " + contact.getPhoneNumber());
+                System.out.println((count + 1) + ": " + contact.getName() + " | " + hypenNumber(contact.getPhoneNumber()));
                 count++;
             }
         }
@@ -93,7 +100,7 @@ public class ContactsManager {
     public static void deleteContact(ArrayList<Contact> contactCollection) throws IOException {
         System.out.println("--------------------");
         for (int i = 0; i < contactCollection.size(); i += 1) {
-            System.out.println((i + 1) + ": " + contactCollection.get(i).getName() + "  |  " + contactCollection.get(i).getPhoneNumber());
+            System.out.println((i + 1) + ": " + contactCollection.get(i).getName() + "  |  " + hypenNumber(contactCollection.get(i).getPhoneNumber()));
         }
         System.out.println("Type the name of your contact and/or a full phone number: ");
         System.out.println("Contact to delete: ");
@@ -103,7 +110,7 @@ public class ContactsManager {
         newContactCollection2 = new ArrayList<>();
         for (Contact contact : contactCollection) {
             if (contact.getPhoneNumber().contains(userIn) || contact.getName().toLowerCase().contains(userIn)) {
-                System.out.println("{y/n} Do you wish to delete " + contact.getName() + " | " + contact.getPhoneNumber() + "?");
+                System.out.println("{y/n} Do you wish to delete " + contact.getName() + " | " + hypenNumber(contact.getPhoneNumber()) + "?");
                 count++;
                 delete = scanner.nextLine();
                 delete = delete.toLowerCase();
@@ -113,6 +120,7 @@ public class ContactsManager {
                             newContactCollection2.add(contactD);
                         }
                     }
+                    System.out.println(contact.getName() + " | " + hypenNumber(contact.getPhoneNumber()) + " deleted.");
                     System.out.println("--------------------");
                     displayMenu(newContactCollection2);
                     break;
@@ -129,17 +137,20 @@ public class ContactsManager {
                     }
                 }
             }
+            if (count == 0) {
+                System.out.println("No contacts found.");
+                System.out.println("Did you want to still delete a contact? (y/n)");
+                delete = scanner.nextLine();
+                delete = delete.toLowerCase();
+                if (delete.equals("y")) {
+                    deleteContact(contactCollection);
+                } else {
+                    System.out.println("--------------------");
+                    displayMenu(contactCollection);
+                }
+            }
         }
-        System.out.println("Nothing contacts deleted");
-        System.out.println("Did you want to still delete a contact? (y/n)");
-        delete = scanner.nextLine();
-        delete = delete.toLowerCase();
-        if (delete.equals("y")) {
-            deleteContact(contactCollection);
-        } else {
-            System.out.println("--------------------");
-            displayMenu(contactCollection);
-        }
+
     }
 
     public static void main(String[] args) throws IOException {
