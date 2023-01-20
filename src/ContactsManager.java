@@ -137,20 +137,20 @@ public class ContactsManager {
                     }
                 }
             }
-            if (count == 0) {
-                System.out.println("No contacts found.");
-                System.out.println("Did you want to still delete a contact? (y/n)");
-                delete = scanner.nextLine();
-                delete = delete.toLowerCase();
-                if (delete.equals("y")) {
-                    deleteContact(contactCollection);
-                } else {
-                    System.out.println("--------------------");
-                    displayMenu(contactCollection);
-                }
+
+        }
+        if (count == 0) {
+            System.out.println("No contacts found.");
+            System.out.println("Did you want to still delete a contact? (y/n)");
+            delete = scanner.nextLine();
+            delete = delete.toLowerCase();
+            if (delete.equals("y")) {
+                deleteContact(contactCollection);
+            } else {
+                System.out.println("--------------------");
+                displayMenu(contactCollection);
             }
         }
-
     }
 
     public static void main(String[] args) throws IOException {
